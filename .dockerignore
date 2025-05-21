@@ -8,3 +8,7 @@ htmlcov
 venv
 __pycache__
 backup
+*.pyc
+env/
+.git
+*.md

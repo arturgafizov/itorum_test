@@ -2,26 +2,19 @@
 
 #### Clone the repo:
 
-    git clone git@bitbucket.org:webtronics-apps-web/backend.git 
+    git clone https://github.com/arturgafizov/itorum_test.git 
     
 
 #### Before running create your superuser email/password and project name in docker/prod/env/.data.env file
-
-    docker-compose exec rudn python manage.py createsuperuser
+    
+    docker-compose exec itorum_test python manage.py makemigrations
+    docker-compose exec itorum_test python manage.py migrate
+    docker-compose exec itorum_test python manage.py createsuperuser
 
 #### Run the local develop server:
 
     docker-compose up -d --build
     docker-compose logs -f
     
-##### Server will bind 8080 port. You can get access to server by browser [http://localhost:8080](http://localhost:8080)
-
-
-#### Configuration for develop stage at 8080 port:
-    docker-compose -f docker-compose.prod.yml up -d --build
-
+##### Server will bind 8000 port. You can get access to server by browser [http://localhost:8000](http://localhost:8000)
   
-### My app is deployed to address:
-
-
-docker run -it -p 84:80 -e APP=test.com -e CERBOT_EMAIL=djangoblog.artur@gmail.com -d --name rudn-front --restart always rudn-front

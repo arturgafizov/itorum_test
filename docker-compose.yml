@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  rudn:
+  itorum_test:
     build:
       context: .
       dockerfile: docker/server/Dockerfile
@@ -14,12 +14,12 @@ services:
       - db
       - redis
     ports:
-      - '8089:8000'
+      - '8000:8000'
     volumes:
-      - ./app/rudn:/app
+      - ./app/itorum_test:/app
       - redis_socket:/redis_socket
     networks:
-      - rudn_network
+      - itorum_test_network
 
   db:
     image: postgres:13.2-alpine
@@ -30,9 +30,9 @@ services:
     env_file:
       - docker/postgres/env.env
     ports:
-      - "6433:5432"
+      - "6432:5432"
     networks:
-      - rudn_network
+      - itorum_test_network
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER" ]
       interval: 50s
@@ -49,9 +49,9 @@ services:
       - redis_data:/data
       - redis_socket:/redis_socket
     ports:
-      - "6381:6379"
+      - "6380:6379"
     networks:
-      - rudn_network
+      - itorum_test_network
     healthcheck:
       test: [ "CMD", "redis-cli","ping" ]
       interval: 1m20s
@@ -62,7 +62,7 @@ services:
     build:
       context: .
       dockerfile: docker/server/Dockerfile
-    command: celery -A source worker -l info --beat --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    command: celery -A celery worker --loglevel=info -Q high_priority,low_priority --beat --scheduler django_celery_beat.schedulers:DatabaseScheduler
     volumes:
       - ./app/source:/app
       - redis_socket:/redis_socket
@@ -74,11 +74,11 @@ services:
       - redis
     restart: unless-stopped
     networks:
-      - rudn_network
+      - itorum_test_network
 
 
 networks:
-  rudn_network:
+  itorum_test_network:
 
 volumes:
   postgres_data:

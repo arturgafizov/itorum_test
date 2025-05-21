@@ -1,4 +1,5 @@
-FROM python:3.9.7
+FROM python:3.10.2
+ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED 1
 RUN apt-get update && \
     apt-get install gettext -y
@@ -9,7 +10,7 @@ COPY ./app/requirements ./app/requirements
 
 RUN pip install -r ./app/requirements/local.txt --no-cache-dir
 
-COPY ./app/rudn /app
+COPY ./app/itorum_test /app
 
 EXPOSE 8000
 
