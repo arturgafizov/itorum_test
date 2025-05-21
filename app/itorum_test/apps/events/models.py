@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 
-from apps.events.task import send_booking_cancellation_confirmation, send_booking_confirmation
+from apps.events.tasks import send_booking_cancellation_confirmation, send_booking_confirmation
 
 User = get_user_model()
 

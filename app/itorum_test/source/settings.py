@@ -246,3 +246,6 @@ CELERY_TASK_QUEUES = {
         'consumer_arguments': {'x-priority': 0},  # низший приоритет
     },
 }
+CELERY_TASKS_IMPORTS = (
+    'apps.events.tasks',
+)
